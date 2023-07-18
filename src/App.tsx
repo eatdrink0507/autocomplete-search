@@ -1,5 +1,8 @@
 import "./App.css";
+import axios from "axios";
+import { useEffect } from "react";
 import { InputComponent } from "./InputComponent";
+import { CacheAPI } from "./getCache";
 
 function App() {
   return (
