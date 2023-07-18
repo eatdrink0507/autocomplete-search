@@ -1,0 +1,16 @@
+.Div {
+  border-radius: 45px;
+  border: 1px solid gainsboro;
+  background-color: white;
+  width: 300px;
+
+  padding: 10px 20px;
+  align-items: center;
+}
+
+input {
+  border: none;
+  &:focus {
+    outline: none;
+  }
+}

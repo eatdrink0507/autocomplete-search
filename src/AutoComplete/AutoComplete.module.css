@@ -1,0 +1,22 @@
+.Div {
+  border-radius: 45px;
+  border: 1px solid gainsboro;
+  background-color: white;
+  width: 300px;
+  max-height: 500px;
+  padding: 20px;
+  margin-top: 20px;
+}
+
+.InnerDiv {
+  max-height: 400px;
+  overflow-y: scroll;
+}
+
+.code {
+  color: darkgray;
+}
+
+.InnerDiv::-webkit-scrollbar {
+  display: none;
+}
