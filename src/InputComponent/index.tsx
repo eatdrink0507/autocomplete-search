@@ -20,8 +20,7 @@ export const InputComponent = () => {
       });
   });
   useEffect(() => {
-    if (searchValue.length === 1) processChanges();
-    else if (!searchValue.length) setRecommend({});
+    processChanges();
   }, [searchValue]);
 
   return (
@@ -44,7 +43,7 @@ export const InputComponent = () => {
       </div>
       {view && (
         <AutoComplete
-          recommend={recommend}
+          recommend={searchValue.length && recommend}
           searchValue={searchValue}
           autoIndex={autoIndex}
         />
@@ -61,7 +60,7 @@ const debounce = (func: any) => {
     timeout = setTimeout(() => {
       timeout = null;
       func.apply(context, args);
-    }, 50);
+    }, 500);
   };
 };
 const KeyMove = (
