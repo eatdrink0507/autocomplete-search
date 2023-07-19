@@ -10,7 +10,7 @@ export const AutoComplete = ({ recommend, searchValue, autoIndex }: Props) => {
         e.sickCd.includes(searchValue) || e.sickNm.includes(searchValue)
     );
     setList(r);
-  }, [searchValue]);
+  }, [recommend, searchValue]);
 
   return (
     <div className={style.Div}>

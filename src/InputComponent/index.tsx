@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AutoComplete } from "../AutoComplete";
 import { CacheAPI } from "../CacheAPI";
 import styles from "./InputComponent.module.css";
@@ -10,14 +10,19 @@ export const InputComponent = () => {
   const [autoIndex, setAutoIndex] = useState(0);
 
   const processChanges = debounce(async () => {
-    const keyword = searchValue;
-    const isCachethere = await CacheAPI.getCache(keyword[0]);
-    if (isCachethere === "nothing" && keyword.length === 1) {
-      CacheAPI.createCache(keyword[0]);
-    } else {
-      setRecommend(isCachethere);
-    }
+    const word = searchValue[0];
+    const now = await CacheAPI.getCache(word);
+    if (now !== "nothing") {
+      setRecommend(now);
+    } else
+      CacheAPI.createCache(word).then((response) => {
+        setRecommend(response);
+      });
   });
+  useEffect(() => {
+    if (searchValue.length === 1) processChanges();
+    else if (!searchValue.length) setRecommend({});
+  }, [searchValue]);
 
   return (
     <>
@@ -30,7 +35,6 @@ export const InputComponent = () => {
           }}
           placeholder="질환명을 입력해 주세요."
           onKeyUp={(e) => {
-            processChanges();
             KeyMove(e, setAutoIndex);
           }}
           onChange={(e) => {
@@ -40,7 +44,7 @@ export const InputComponent = () => {
       </div>
       {view && (
         <AutoComplete
-          recommend={searchValue.length && recommend}
+          recommend={recommend}
           searchValue={searchValue}
           autoIndex={autoIndex}
         />
@@ -48,16 +52,18 @@ export const InputComponent = () => {
     </>
   );
 };
-function debounce(func: { (): void; apply?: any }, timeout = 700) {
-  let timer: string | number | NodeJS.Timeout | undefined;
-  return (...args: any) => {
-    clearTimeout(timer);
-    timer = setTimeout(() => {
-      func.apply(args);
-    }, timeout);
-  };
-}
 
+const debounce = (func: any) => {
+  let timeout: NodeJS.Timeout | null;
+  return (...args: any) => {
+    const context = this;
+    if (timeout) clearTimeout(timeout);
+    timeout = setTimeout(() => {
+      timeout = null;
+      func.apply(context, args);
+    }, 50);
+  };
+};
 const KeyMove = (
   e: React.KeyboardEvent,
   callback: React.Dispatch<React.SetStateAction<number>>
