@@ -1,7 +1,7 @@
 import style from "./AutoComplete.module.css";
 import { useState, useEffect } from "react";
 
-export const AutoComplete = ({ recommend, searchValue }: Props) => {
+export const AutoComplete = ({ recommend, searchValue, autoIndex }: Props) => {
   const [list, setList] = useState<any>();
 
   useEffect(() => {
@@ -15,9 +15,9 @@ export const AutoComplete = ({ recommend, searchValue }: Props) => {
   return (
     <div className={style.Div}>
       <div className={style.InnerDiv}>
-        {!list?.length && "검색어 없음"}
+        <span> {list?.length ? "추천 검색어" : "검색어 없음"}</span>
         {list?.map((e: Object, i: number) => (
-          <div key={i}>
+          <div className={i === autoIndex ? style.selected : ""} key={i}>
             <span className={style.code}>{e.sickCd}</span> {e.sickNm}
           </div>
         ))}
@@ -28,7 +28,7 @@ export const AutoComplete = ({ recommend, searchValue }: Props) => {
 
 type Props = {
   recommend: { data: [Object] };
-
+  autoIndex: number;
   searchValue: string;
 };
 

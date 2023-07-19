@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { AutoComplete } from "../AutoComplete";
-import { CacheAPI } from "../getCache";
+import { CacheAPI } from "../CacheAPI";
 import styles from "./InputComponent.module.css";
 
 export const InputComponent = () => {
   const [searchValue, setSearchValue] = useState<string>("");
   const [recommend, setRecommend] = useState<any>();
   const [view, setView] = useState(false);
+  const [autoIndex, setAutoIndex] = useState(0);
 
   const processChanges = debounce(async () => {
     const keyword = searchValue;
@@ -23,9 +24,15 @@ export const InputComponent = () => {
       <div className={styles.Div}>
         <input
           onFocus={() => setView(true)}
-          onBlur={() => setView(false)}
+          onBlur={() => {
+            setView(false);
+            setAutoIndex(0);
+          }}
           placeholder="질환명을 입력해 주세요."
-          onKeyUp={() => processChanges()}
+          onKeyUp={(e) => {
+            processChanges();
+            KeyMove(e, setAutoIndex);
+          }}
           onChange={(e) => {
             setSearchValue(e.target.value);
           }}
@@ -35,6 +42,7 @@ export const InputComponent = () => {
         <AutoComplete
           recommend={searchValue.length && recommend}
           searchValue={searchValue}
+          autoIndex={autoIndex}
         />
       )}
     </>
@@ -49,3 +57,14 @@ function debounce(func: { (): void; apply?: any }, timeout = 700) {
     }, timeout);
   };
 }
+
+const KeyMove = (
+  e: React.KeyboardEvent,
+  callback: React.Dispatch<React.SetStateAction<number>>
+) => {
+  if (e.key === "ArrowDown") {
+    callback((prev) => prev + 1);
+  } else if (e.key === "ArrowUp") {
+    callback((prev) => prev - 1);
+  }
+};

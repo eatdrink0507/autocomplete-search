@@ -1,5 +1,5 @@
 .Div {
-  border-radius: 45px;
+  border-radius: 20px;
   border: 1px solid gainsboro;
   background-color: white;
   width: 300px;
@@ -19,4 +19,8 @@
 
 .InnerDiv::-webkit-scrollbar {
   display: none;
+}
+
+.selected {
+  background-color: gainsboro;
 }
