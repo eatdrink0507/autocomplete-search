@@ -23,7 +23,12 @@ yarn(패키지 매니저)
 4. 존재하지 않으면 검색어[0] 으로 api 호출해서 cache에 검색어[0] 이라는 이름으로 저장
 5. 이후에는 cache의 데이터를 가지고 다시 filter(e => e.includes(검색어))로 추천 검색어 리스트를 갱신
 
+콘솔창 + Cache Storage 
 ![api sample](https://github.com/eatdrink0507/autocomplete-search/assets/111216062/c846825e-726e-434c-9b1e-0288416789f8)
+
+콘솔창 + 네트워크 
+![searchview](https://github.com/eatdrink0507/autocomplete-search/assets/111216062/e393897b-549c-4693-8d0e-955665d1a2e2)
+
 
 GIF : '조' 로 검색 시작할 경우, 우선 'ㅈ' 로 api 1회 호출, 그다음 '조'로 api 1회 호출 (여기까지 총 2회 호출)
 '조'로 검색한 api 응답값을 cache에 '조' 라는 이름으로 저장
