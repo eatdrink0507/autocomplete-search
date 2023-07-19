@@ -2,10 +2,11 @@
   border-radius: 45px;
   border: 1px solid gainsboro;
   background-color: white;
-  width: 300px;
-
-  padding: 10px 20px;
+  width: 240px;
+  padding: 10px 50px;
   align-items: center;
+  display: grid;
+  grid-template-columns: 230px 20px;
 }
 
 input {
@@ -13,4 +14,5 @@ input {
   &:focus {
     outline: none;
   }
+  text-align: center;
 }
